@@ -36,7 +36,7 @@ def index():
         
 @app.route('/register',methods=['GET','POST'])
 def register():
-    if current_user.is_authinticated:
+    if current_user.is_authenticated:
         return render_template(url_for('tasks_list'))
             
     if request.method=='POST':
