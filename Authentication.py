@@ -5,7 +5,7 @@ import uuid
 import os
 
 app= Flask(__name__)
-app.config['SECRET_KEY'] ='b7f8c2e4a1d94e6f9a3c5d7e8f2b4c6a'
+app.config['SECRET_KEY'] = 'b7f8c2e4a1d94e6f9a3c5d7e8f2b4c6a'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -17,12 +17,12 @@ class User(UserMixin):
         self.id=id
         self.username=username
         self.password_hash=password_hash
-        @staticmethod
-        def get(user_id):
-            return users.get(user_id)
+    @staticmethod
+    def get(user_id):
+        return users.get(user_id)
         
-        def verify_password(self,password):
-            return check_password_hash(self.password_hash,password)
+    def verify_password(self,password):
+        return check_password_hash(self.password_hash,password)
         
 @login_manager.user_loader
 def load_user(user_id):
@@ -36,7 +36,7 @@ def index():
         
 @app.route('/register',methods=['GET','POST'])
 def register():
-    if current_user.is_authenticated:
+    if current_user.is_authinticated:
         return render_template(url_for('tasks_list'))
             
     if request.method=='POST':
@@ -60,7 +60,7 @@ def register():
         return redirect(url_for("login"))
     return render_template("register.html")
 
-@app.route('/login',methods=['GET','POST'])
+@app.route('/login',methos=['GET','POST'])
 def login():
     if current_user.is_authenticated:
         return render_template(url_for('tasks_list'))  
@@ -76,7 +76,7 @@ def login():
             login_user(user)
             flash("User Logged in Successfully")
             next_page=request.args.get('next')
-            return redirect(next_page or url_for('lasks_list'))
+            return redirect(next_page or url_for('tasks_list'))
         else:
             flash('Invalid Credentials')
     return render_template('login.html')
