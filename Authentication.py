@@ -5,7 +5,7 @@ import uuid
 import os
 
 app= Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
+app.config['SECRET_KEY'] ='b7f8c2e4a1d94e6f9a3c5d7e8f2b4c6a'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -36,7 +36,7 @@ def index():
         
 @app.route('/register',methods=['GET','POST'])
 def register():
-    if current_user.is_authinticated:
+    if current_user.is_authenticated:
         return render_template(url_for('tasks_list'))
             
     if request.method=='POST':
@@ -58,9 +58,9 @@ def register():
         users[user_id]=new_user
         flash("registration Successful!! Please Login")
         return redirect(url_for("login"))
-    return render_template("registration.html")
+    return render_template("register.html")
 
-@app.route('/login',methos=['GET','POST'])
+@app.route('/login',methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
         return render_template(url_for('tasks_list'))  
