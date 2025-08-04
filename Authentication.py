@@ -72,7 +72,7 @@ def login():
             if user_obj.username == username:
                 user = user_obj
                 break
-        if user and User.verify_password(password):
+        if user and user.verify_password(password):
             login_user(user)
             flash("User Logged in Successfully")
             next_page=request.args.get('next')
