@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 
 
 #making port 5000 available for application running
-EXPOSE 5000
+EXPOSE 8000
 
 #run the python file
 CMD [ "python","Authentication.py" ]
