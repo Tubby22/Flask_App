@@ -1,20 +1,21 @@
-#Using an official Python runtime as a parentimage
-FROM python
+# Use a more specific Python image for better security and smaller size
+FROM python:3.10-slim
 
-#Set Working directory in the container
+# Set the working directory
 WORKDIR /Auth
 
-#copy the files to the dockerimage directory
-COPY .. /Auth
+# Copy the requirements file first to leverage Docker's build cache
+COPY requirements.txt .
 
+# Install dependencies. This step will only run again if requirements.txt changes
+RUN pip install --no-cache-dir -r requirements.txt
 
-# installing all the dependencies
-RUN pip install -r requirements.txt
+# Copy the rest of your application's files
+COPY . .
 
+# Expose the port your application is actually running on
+# Make sure your app.run() or equivalent is binding to this port
+EXPOSE 5000
 
-
-#making port 5000 available for application running
-EXPOSE 8000
-
-#run the python file
-CMD [ "python","Authentication.py" ]
+# Run the python file
+CMD [ "python", "Authentication.py" ]
